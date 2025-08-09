@@ -1,6 +1,7 @@
 class Solution {
     public int romanToInt(String s) {
-         HashMap<Character, Integer> map = new HashMap<>();
+
+         Map<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
         map.put('V', 5);
         map.put('X', 10);
@@ -10,18 +11,22 @@ class Solution {
         map.put('M', 1000);
 
         int total = 0;
+        int prevValue = 0;
 
-        for (int i = 0; i < s.length(); i++) {
-            int currentVal = map.get(s.charAt(i));
-
-            // If this is not the last char and the next char has a greater value
-            if (i < s.length() - 1 && currentVal < map.get(s.charAt(i + 1))) {
-                total -= currentVal; // subtract
+        for (int i = s.length() - 1; i >= 0; i--) {
+            int currentValue = map.get(s.charAt(i));
+            
+            // If current value is less than previous, subtract it
+            if (currentValue < prevValue) {
+                total -= currentValue;
             } else {
-                total += currentVal; // add
+                total += currentValue;
             }
+            prevValue = currentValue;
         }
-
         return total;
+    
     }
 }
+        
+    
